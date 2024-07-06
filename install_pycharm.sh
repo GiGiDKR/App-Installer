@@ -1,13 +1,14 @@
 #!/bin/bash
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
-proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget https://download.jetbrains.com/python/pycharm-community-2024.1.4-aarch64.tar.gz -O pycharm-community.tar.gz
+url="https://data.services.jetbrains.com/products/download?code=PCC&platform=linux"
+
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget "$url" -O pycharm-community.tar.gz
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo -S apt install default-jdk -y
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo -S tar xzf pycharm-community.tar.gz
-proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo -S mv pycharm-community-2023.2/ /opt/pycharm-community
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo -S mv pycharm-community-*/ /opt/pycharm-community
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo -S chmod +x /opt/pycharm-community/bin/pycharm.sh
 
-# Create the desktop entry
 echo "[Desktop Entry]
 Name=PyCharm
 Comment=A Python IDE
